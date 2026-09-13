@@ -1,0 +1,226 @@
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1a1a2e', 'secondaryColor': '#16213e', 'tertiaryColor': '#0f3460', 'background': '#0d0d1a', 'mainBkg': '#0d0d1a', 'secondBkg': '#1a1a2e', 'tertiaryBkg': '#16213e', 'primaryBorderColor': '#e94560', 'secondaryBorderColor': '#00d9ff', 'tertiaryBorderColor': '#7b68ee', 'lineColor': '#00d9ff', 'textColor': '#eaeaea', 'fontFamily': 'JetBrains Mono, Fira Code, monospace'}}}%%
+graph TB
+    %% ============ STYLES ============
+    classDef client fill:#1a1a2e,stroke:#e94560,stroke-width:2px,color:#eaeaea
+    classDef service fill:#16213e,stroke:#00d9ff,stroke-width:2px,color:#eaeaea
+    classDef dist fill:#0f3460,stroke:#7b68ee,stroke-width:2px,color:#eaeaea
+    classDef monitor fill:#1a1a2e,stroke:#00ff88,stroke-width:2px,color:#eaeaea
+    classDef trust fill:#2d1b3d,stroke:#ff6b35,stroke-width:3px,stroke-dasharray: 5 5,color:#eaeaea
+    classDef data fill:#0d1b2a,stroke:#4ecdc4,stroke-width:1px,color:#eaeaea
+
+    %% ============ USER DEVICES ============
+    subgraph USER_DEVICES [📱 User Devices - Trusted Execution Environment]
+        direction TB
+        
+        subgraph BROWSER_EXT [🌐 Browser Extension (MV3)]
+            BE_CORE[Core Poisoning Engine\nRust/WASM + TypeScript]
+            BE_FP[Fingerprint Rotator\nCanvas/WebGL/AudioContext]
+            BE_BIO[Behavioral Biometrics\nKeystroke/Mouse/Scroll Noise]
+            BE_NET[Network Obfuscation\nTiming/Cover Traffic]
+            BE_STORAGE[Encrypted Local Storage\nIndexedDB + Web Crypto]
+        end
+        
+        subgraph MOBILE_APP [📱 Mobile App (iOS/Android)]
+            MA_CORE[Core Poisoning Engine\nRust + Swift/Kotlin FFI]
+            MA_SENSORS[Sensor Noise Injection\nAccel/Gyro/Mag/Baro/Proximity]
+            MA_LOCATION[Location Spoofing\nTrajectory Generation + Geofencing]
+            MA_AUDIO[Audio Adversarial\nHotword Jamming + Ultrasonic]
+            MA_KEYSTORE[Hardware Keystore\nSecure Enclave / StrongBox]
+        end
+        
+        subgraph WEARABLE [⌚ Wearable Integration]
+            WA_CORE[Lightweight Engine\nRust no_std + Zephyr/FreeRTOS]
+            WA_HRV[HRV/SpO2 Noise\nPhysiological Mimicry]
+            WA_SLEEP[Sleep Pattern Noise\nCircadian Preservation]
+            WA_ACTIVITY[Activity Classification\nAdversarial Gait/Step Noise]
+            WA_BLE[BLE Privacy\nMAC Rotation + Advertising Noise]
+        end
+        
+        subgraph PRINTABLE [🖨️ Printable Patterns]
+            PP_GEN[Pattern Generator\nCLI / WASM Web Tool]
+            PP_QR[QR/DataMatrix\nHigh-Capacity Encoding]
+            PP_IR[IR/UV Inks\nSpectral Watermarking]
+            PP_PHYS[Physical Placement\nLaptop Lid / Phone Case / Badge]
+        end
+    end
+
+    %% ============ PATTERN GENERATION SERVICE ============
+    subgraph PATTERN_SERVICE [☁️ Pattern Generation Service - Untrusted / Federated]
+        direction TB
+        
+        subgraph API_GATEWAY [🔌 API Gateway]
+            AG_RATE[Rate Limiting\nToken Bucket + Proof-of-Work]
+            AG_AUTH[Anonymous Auth\nVRF-based Pseudonyms]
+            AG_ROUTE[Request Routing\nGeographic / Load]
+        end
+        
+        subgraph PATTERN_ENGINES [⚙️ Pattern Engines]
+            PE_FINGERPRINT[Fingerprint Engine\nGAN-based Synthetic FP\nStyleGAN-3 + Diff Privacy]
+            PE_BEHAVIORAL[Behavioral Engine\nLSTM/Transformer Seq2Seq\nUser Calibration]
+            PE_LOCATION[Location Engine\nMarkov Chain + Road Network\nDifferential Privacy ε=0.5]
+            PE_SENSOR[Sensor Engine\nPhysics-Informed Neural Nets\nIMU/GNSS Simulation]
+            PE_AUDIO[Audio Engine\nAdversarial Perturbation\nPGD + Perceptual Loss]
+            PE_GENOMIC[Genomic Engine\nVariant Frequency Matching\nHWE + LD Preservation]
+        end
+        
+        subgraph PERSONALIZATION [🎯 Personalization Layer]
+            PL_PROFILE[Local Profile Embedding\nOn-Device Only\nCLIP-style Multimodal]
+            PL_CALIB[Calibration Protocol\nChallenge-Response\nZero-Knowledge Proof]
+            PL_ADAPT[Adaptive Scheduler\nBandit Algorithm\nThompson Sampling]
+        end
+        
+        subgraph FEDERATION [🔗 Federation Layer]
+            FED_DISCOVERY[Service Discovery\nDHT / DNS-over-HTTPS]
+            FED_CONSENSUS[Consensus\nBFT / Tendermint Light]
+            FED_REPLICATION[State Replication\nCRDT + Merkle DAG]
+        end
+    end
+
+    %% ============ DISTRIBUTION MECHANISM ============
+    subgraph DISTRIBUTION [📡 Distribution Mechanism - Multi-Channel]
+        direction TB
+        
+        subgraph DIGITAL_CHANNELS [📦 Digital Channels]
+            DC_IPFS[IPFS / IPNS\nContent-Addressed + PubSub]
+            DC_P2P[Libp2p GossipSub\nMesh + FloodSub Hybrid]
+            DC_DOH[DNS-over-HTTPS\nDomain Fronting]
+            DC_TOR[Tor Onion Services\nv3 + Client Auth]
+            DC_WEB[Static Web / CDN\nSigned Manifests + SRI]
+        end
+        
+        subgraph PHYSICAL_CHANNELS [📦 Physical / Offline Channels]
+            PC_QR[QR Code Sharing\nAirGap Transfer]
+            PC_NFC[NFC Tags\nSigned Payloads]
+            PC_SNEAKER[Sneakernet\nUSB / SD Card / Print]
+            PC_RADIO[LoRaWAN / Meshtastic\nLong-Range Low-Power]
+            PC_UWB[UWB / BLE Beacons\nProximity Distribution]
+        end
+        
+        subgraph VERIFICATION [✅ Verification Layer]
+            VER_SIG[Ed25519 Signatures\nPer-Pattern + Manifest]
+            VER_MERKLE[Merkle Proofs\nInclusion + Consistency]
+            VER_TLOG[Transparency Log\nCT-style + Gossip]
+            VER_ATTEST[Remote Attestation\nTEE Quote Verification]
+        end
+    end
+
+    %% ============ EFFECTIVENESS MONITORING ============
+    subgraph MONITORING [📊 Effectiveness Monitoring - Local-First + DP]
+        direction TB
+        
+        subgraph LOCAL_METRICS [📈 Local Metrics Collection]
+            LM_FP[Fingerprint Entropy\nShannon / Min-Entropy]
+            LM_LINK[Linkage Attack Success\nk-Anonymity / l-Diversity]
+            LM_MODEL[Model Degradation\nAccuracy / AUC Drop]
+            LM_NOISE[Noise-to-Signal Ratio\nPSNR / SSIM / Perceptual]
+        end
+        
+        subgraph AGGREGATION [🔒 Privacy-Preserving Aggregation]
+            AGG_LOCAL[Local Aggregation\nSecure Enclave]
+            AGG_DP[Differential Privacy\nGaussian Mechanism ε=0.1]
+            AGG_SHUFFLE[Shuffle Model\nErasure Coding + Mixnet]
+            AGG_FED[Federated Learning\nSecure Aggregation + DP]
+        end
+        
+        subgraph FEEDBACK_LOOP [🔄 Feedback Loop]
+            FL_ADAPT[Pattern Adaptation\nRL Bandit / CMA-ES]
+            FL_ALERT[Anomaly Detection\nIsolation Forest + VAE]
+            FL_REPORT[User Dashboard\nLocal-First Web UI]
+            FL_EXPORT[Data Export\nJSON / CSV / Parquet]
+        end
+    end
+
+    %% ============ CONNECTIONS ============
+    %% Device -> Pattern Service
+    BE_CORE -.->|Anonymous Request\nVRF Pseudonym| AG_AUTH
+    MA_CORE -.->|Anonymous Request\nVRF Pseudonym| AG_AUTH
+    WA_CORE -.->|Anonymous Request\nVRF Pseudonym| AG_AUTH
+    PP_GEN -.->|Offline Generation\nPre-computed Patterns| PE_FINGERPRINT
+    
+    %% Pattern Service -> Distribution
+    PE_FINGERPRINT -->|Signed Patterns| VER_SIG
+    PE_BEHAVIORAL -->|Signed Patterns| VER_SIG
+    PE_LOCATION -->|Signed Patterns| VER_SIG
+    PE_SENSOR -->|Signed Patterns| VER_SIG
+    PE_AUDIO -->|Signed Patterns| VER_SIG
+    PE_GENOMIC -->|Signed Patterns| VER_SIG
+    
+    VER_SIG --> DC_IPFS
+    VER_SIG --> DC_P2P
+    VER_SIG --> DC_DOH
+    VER_SIG --> DC_TOR
+    VER_SIG --> DC_WEB
+    VER_SIG --> PC_QR
+    VER_SIG --> PC_NFC
+    VER_SIG --> PC_SNEAKER
+    VER_SIG --> PC_RADIO
+    VER_SIG --> PC_UWB
+    
+    %% Distribution -> Devices
+    DC_IPFS -->|Pull / Subscribe| BE_CORE
+    DC_P2P -->|GossipSub| MA_CORE
+    DC_DOH -->|DNS TXT Records| WA_CORE
+    DC_TOR -->|Onion Service| BE_CORE
+    DC_WEB -->|HTTPS + SRI| PP_GEN
+    PC_QR -->|Camera Scan| MA_CORE
+    PC_NFC -->|NFC Tap| MA_CORE
+    PC_SNEAKER -->|File Transfer| BE_CORE
+    PC_RADIO -->|LoRa Packet| WA_CORE
+    PC_UWB -->|BLE Advertisement| MA_CORE
+    
+    %% Devices -> Monitoring
+    BE_CORE -->|Local Metrics| LM_FP
+    MA_CORE -->|Local Metrics| LM_LINK
+    WA_CORE -->|Local Metrics| LM_MODEL
+    PP_GEN -->|Local Metrics| LM_NOISE
+    
+    LM_FP --> AGG_LOCAL
+    LM_LINK --> AGG_LOCAL
+    LM_MODEL --> AGG_LOCAL
+    LM_NOISE --> AGG_LOCAL
+    
+    AGG_LOCAL --> AGG_DP
+    AGG_DP --> AGG_SHUFFLE
+    AGG_SHUFFLE --> AGG_FED
+    
+    AGG_FED --> FL_ADAPT
+    FL_ADAPT --> PE_FINGERPRINT
+    FL_ADAPT --> PE_BEHAVIORAL
+    FL_ADAPT --> PE_LOCATION
+    FL_ADAPT --> PE_SENSOR
+    FL_ADAPT --> PE_AUDIO
+    FL_ADAPT --> PE_GENOMIC
+    
+    FL_ADAPT --> FL_ALERT
+    FL_ALERT --> FL_REPORT
+    FL_REPORT --> FL_EXPORT
+
+    %% ============ TRUST BOUNDARIES ============
+    subgraph TRUST_BOUNDARY_1 [🔴 Fully Trusted - User Device]
+        direction LR
+        TB1[TEE / Secure Enclave]
+        TB2[Hardware RNG]
+        TB3[User Entropy]
+    end
+    
+    subgraph TRUST_BOUNDARY_2 [🟡 Minimally Trusted - Pattern Service]
+        direction LR
+        TB4[Open Source Code]
+        TB5[Reproducible Builds]
+        TB6[Attestation]
+    end
+    
+    subgraph TRUST_BOUNDARY_3 [🟢 Untrusted - Network/Infrastructure]
+        direction LR
+        TB7[ISP / CDN / DNS]
+        TB8[App Stores]
+        TB9[Cloud Providers]
+    end
+
+    class BROWSER_EXT,MOBILE_APP,WEARABLE,PRINTABLE client
+    class PATTERN_ENGINES,PERSONALIZATION,FEDERATION,API_GATEWAY service
+    class DIGITAL_CHANNELS,PHYSICAL_CHANNELS,VERIFICATION dist
+    class LOCAL_METRICS,AGGREGATION,FEEDBACK_LOOP monitor
+    class TRUST_BOUNDARY_1,TRUST_BOUNDARY_2,TRUST_BOUNDARY_3 trust
+```
