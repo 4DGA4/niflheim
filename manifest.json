@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "niflheim",
+  "version": "1.0",
+  "description": "Privacy-poisoning framework for DarkEmpire",
+  "permissions": [
+    "webRequest",
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "web_accessible_resources": [{
+    "resources": ["OPFSManager.js", "net-obfuscator.js", "bio-noiser.js"],
+    "matches": ["<all_urls>"]
+  }]
+}

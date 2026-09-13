@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OPFSManager Test</title>
+  <script type="module">
+    import OPFSManager from './OPFSManager.js';
+    
+    async function testOPFSManager() {
+      const output = document.getElementById('output');
+      const log = (msg, isError = false) => {
+        const p = document.createElement('p');
+        p.textContent = msg;
+        p.style.color = isError ? 'red' : 'inherit';
+        output.appendChild(p);
+      };
+      
+      try {
+        const opfs = new OPFSManager(1); // 1MB for testing
+        await opfs.initialize();
+        log('✅ OPFSManager initialized');
+        
+        // Test 1: Write and read a file (validate encryption)
+        const testData = new TextEncoder().encode('OPFS Encryption Test');
+        await opfs.writeFile('test.txt', testData);
+        log('✅ File written successfully');
+        
+        const readData = await opfs.readFile('test.txt');
+        const decodedData = new TextDecoder().decode(readData);
+        if (decodedData !== 'OPFS Encryption Test') {
+          throw new Error('Decrypted data does not match original!');
+        }
+        log(`✅ File read successfully: ${decodedData}`);
+        
+        // Test 2: Storage limits
+        const stats = await opfs.getStorageStats();
+        log(`📊 Storage stats: ${stats.usedPercentage.toFixed(2)}% used (${stats.currentSize} bytes)`);
+        
+        // Test 3: Eviction logic (fill storage to trigger eviction)
+        const largeData = new Uint8Array(500 * 1024).fill(0); // 500KB
+        await opfs.writeFile('large1.txt', largeData);
+        log('✅ First large file written (500KB)');
+        
+        await opfs.writeFile('large2.txt', largeData);
+        log('✅ Second large file written (500KB)');
+        
+        // Verify eviction
+        const newStats = await opfs.getStorageStats();
+        if (newStats.currentSize > 1 * 1024 * 1024) {
+          throw new Error('Storage limit exceeded! Eviction failed.');
+        }
+        log(`✅ Eviction successful. New storage stats: ${newStats.usedPercentage.toFixed(2)}% used (${newStats.currentSize} bytes)`);
+        
+        // Test 4: Error handling (read non-existent file)
+        try {
+          await opfs.readFile('nonexistent.txt');
+          log('❌ Error handling test failed: Expected error not thrown', true);
+        } catch (error) {
+          log(`✅ Error handling test passed: ${error.message}`);
+        }
+        
+        log('🎉 All tests completed successfully!');
+      } catch (error) {
+        log(`❌ Test failed: ${error.message}`, true);
+      }
+    }
+    
+    testOPFSManager();
+  </script>
+</head>
+<body>
+  <h1>OPFSManager Test</h1>
+  <div id="output"></div>
+</body>
+</html>
